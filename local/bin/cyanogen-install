@@ -1,0 +1,125 @@
+#!/usr/bin/python
+#
+# cyanogen-install - Semi-automated CyanogenMod Installer
+#
+# Copyright (c) 2013 Lorenzo Villani
+#
+# The MIT License:
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+import os
+import os.path
+import subprocess
+import sys
+import time
+import urllib
+
+
+GAPPS = "http://goo.im/gapps/gapps-jb-20130301-signed.zip"
+FILES = {
+    # Nexus 7 GSM
+    "grouper": {
+        "recovery": "http://download2.clockworkmod.com/recoveries/recovery-clockwork-touch-6.0.3.1-grouper.img",
+        "system": "http://get.cm/get/jenkins/24780/cm-10.1-20130411-EXPERIMENTAL-grouper-M3.zip",
+    },
+    # Galaxy Nexus GSM
+    "maguro": {
+        "recovery": "http://download2.clockworkmod.com/recoveries/recovery-clockwork-touch-6.0.3.1-maguro.img",
+        "system": "http://get.cm/get/jenkins/24784/cm-10.1-20130411-EXPERIMENTAL-maguro-M3.zip",
+    },
+}
+
+
+def main():
+    download_file(GAPPS, "gapps.zip")
+    download_device_files(sys.argv[1])
+    unlock()
+    wipe()
+    flash()
+
+
+def download_device_files(device):
+    download_file(FILES[device]["recovery"], "recovery.img")
+    download_file(FILES[device]["system"], "system.zip")
+
+
+def download_file(url, dest):
+    if not os.path.isfile(dest):
+        print "Downloading %s" % url
+        urllib.urlretrieve(url, dest)
+
+
+def unlock():
+    reboot()
+    call("fastboot", "oem", "unlock")
+
+
+def wipe():
+    reboot()
+    call("fastboot", "erase", "boot")
+    call("fastboot", "erase", "recovery")
+    call("fastboot", "erase", "-w", "system")
+
+
+def flash():
+    flash_recovery()
+    enter_recovery()
+    upload_system()
+    upload_gapps()
+
+
+def flash_recovery():
+    call("fastboot", "flash", "recovery", "recovery.img")
+
+
+def enter_recovery():
+    reboot()
+    call("fastboot", "boot", "recovery.img")
+    time.sleep(10)
+    call("adb", "shell", "mount", "/data")
+    time.sleep(5)
+
+
+def upload_system():
+    call("adb", "push", "system.zip", "/sdcard/update.zip")
+
+
+def upload_gapps():
+    call("adb", "push", "gapps.zip", "/sdcard/gapps.zip")
+
+
+def reboot():
+    try:
+        call("adb", "reboot", "bootloader")
+    except:
+        call("fastboot", "reboot-bootloader")
+    finally:
+        time.sleep(10)
+
+
+def call(*args, **kwargs):
+    if "check" in kwargs and kwargs["check"]:
+        subprocess.check_call(args)
+    else:
+        subprocess.call(args)
+
+if __name__ == '__main__':
+    main()

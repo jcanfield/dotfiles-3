@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# gnome-defaults - Default settings for GNOME
+#
+# Copyright (c) 2013 Lorenzo Villani
+#
+# The MIT License:
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+set -eux
+
+# Desktop
+gsettings set org.gnome.desktop.interface text-scaling-factor 0.89583
+gsettings set org.gnome.desktop.media-handling autorun-never true
+gsettings set org.gnome.desktop.sound event-sounds false
+
+# Keyboard
+gsettings set org.gnome.libgnomekbd.keyboard layouts "['us\tcolemak', 'it']"
+gsettings set org.gnome.libgnomekbd.keyboard options "['ctrl\tctrl:nocaps', 'grp\tgrp:rctrl_switch']"
+
+# Touchpad
+gsettings set org.gnome.settings-daemon.peripherals.touchpad disable-while-typing true
+gsettings set org.gnome.settings-daemon.peripherals.touchpad horiz-scroll-enabled true
+gsettings set org.gnome.settings-daemon.peripherals.touchpad scroll-method 'two-finger-scrolling'
+gsettings set org.gnome.settings-daemon.peripherals.touchpad tap-to-click true
+
+# Power
+gsettings set org.gnome.desktop.session idle-delay 120
+gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action 'nothing'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac 120
+gsettings set org.gnome.settings-daemon.plugins.power sleep-display-battery 120
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 600
+
+# VirtualBox
+[[ -x "/usr/bin/vboxmanage" ]] && vboxmanage setextradata global GUI/SuppressMessages remindAboutAutoCapture,confirmInputCapture,remindAboutMouseIntegrationOn,remindAboutWrongColorDepth
+

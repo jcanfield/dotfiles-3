@@ -1,0 +1,11 @@
+{
+	"installed_packages":
+	[
+		"AutoPEP8",
+		"Emacs-like Modelines",
+		"INI",
+		"MarkdownEditing",
+		"Package Control",
+		"Wrap Plus"
+	]
+}

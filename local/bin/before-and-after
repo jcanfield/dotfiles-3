@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# before-and-after - Executes a command two times and compares the output.
+# Written by Lorenzo Villani in 2013. Released as Public Domain.
+#
+
+set -eu
+
+TEMP_BEFORE="$(mktemp /tmp/baa.XXXXXX)"
+TEMP_AFTER="$(mktemp /tmp/baa.XXXXXX)"
+
+baa_main() {
+    trap baa_cleanup EXIT
+
+    ${@} 2>&1 >"${TEMP_BEFORE}"
+    read -p "Press enter to continue..."
+    ${@} 2>&1 >"${TEMP_AFTER}"
+
+    diff -Naur "${TEMP_BEFORE}" "${TEMP_AFTER}"
+}
+
+baa_cleanup() {
+    rm -f "${TEMP_AFTER}"
+    rm -f "${TEMP_BEFORE}"
+}
+
+baa_main ${@}

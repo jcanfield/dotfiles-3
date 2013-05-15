@@ -1,0 +1,38 @@
+#!/usr/bin/python
+
+from functools import partial
+import os
+import os.path as path
+
+
+HOME = os.path.expanduser("~")
+DOTFILES = os.path.dirname(os.path.abspath(__file__))
+
+
+def main():
+    path.walk(DOTFILES, visit, None)
+
+
+def visit(_, directory, files):
+    files[:] = filter(is_not_ignored, files)
+
+    for source in filter(path.isfile, map(partial(path.join, directory), files)):
+        symlink(source, path.join(HOME, "." + path.relpath(source, DOTFILES)))
+
+
+def is_not_ignored(name):
+    return name != ".git" and name != "install" and name != "README.md"
+
+
+def symlink(source, dest):
+    if not path.exists(path.dirname(dest)):
+        os.makedirs(path.dirname(dest))
+
+    if path.lexists(dest):
+        os.unlink(dest)
+
+    os.symlink(source, dest)
+
+
+if __name__ == '__main__':
+    main()

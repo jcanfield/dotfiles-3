@@ -1,0 +1,21 @@
+[alias]
+	br = branch
+	bra = branch -a
+	cl = clean -ndxff
+	clr = clean -dxff
+	co = checkout
+	log = log --decorate --graph --oneline
+	purr = pull --rebase
+	ready = rebase -i @{u}
+	st = status -sb
+	sti = status -sb --ignored
+[color]
+	ui = auto
+[core]
+	whitespace = trailing-space,space-before-tab
+	excludesfile = ~/.gitignore
+[merge]
+	tool = meld
+[user]
+	email = lorenzo@villani.me
+	name = Lorenzo Villani

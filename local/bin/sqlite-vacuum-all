@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# sqlite-vacuum-all - Finds all SQLite 3.x database and runs 'VACUUM' on them.
+# Written by Lorenzo Villani in 2013. Released as Public Domain.
+#
+
+set -u
+set -o posix
+
+find -type f | while read entry; do
+    if [[ "$(file -b ${entry})" == "SQLite 3.x database"* ]]; then
+        sqlite3 "${entry}" 'VACUUM;'
+    fi
+done
