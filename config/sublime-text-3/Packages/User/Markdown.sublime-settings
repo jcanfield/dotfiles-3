@@ -1,6 +1,6 @@
 {
     "trim_trailing_white_space_on_save": true,
-    "font_face": "Ubuntu Mono",
+    "font_face": "Monospace",
     "font_size": 12,
     "word_wrap": false,
     "wrap_width": 79,
