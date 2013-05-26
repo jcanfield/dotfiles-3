@@ -2,6 +2,7 @@
 	"installed_packages":
 	[
 		"AutoPEP8",
+		"CMake",
 		"INI",
 		"MarkdownEditing",
 		"Package Control",
