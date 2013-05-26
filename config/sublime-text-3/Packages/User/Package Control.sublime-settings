@@ -3,6 +3,7 @@
 	[
 		"AutoPEP8",
 		"CMake",
+		"fish-shell",
 		"INI",
 		"MarkdownEditing",
 		"Package Control",
