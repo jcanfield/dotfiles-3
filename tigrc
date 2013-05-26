@@ -1,0 +1,11 @@
+#
+# ~/.tigrc
+#
+
+bind generic Up move-up
+bind generic Down move-down
+
+bind status c !git commit
+bind status C !git commit --amend
+bind status p !git push
+bind status P !git push --force
