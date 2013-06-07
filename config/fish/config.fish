@@ -10,6 +10,8 @@
 
 set -e fish_greeting
 set -x CFLAGS "-pedantic -Wall -Wextra -Werror"
+set -x CC clang
+set -x CXX clang++
 set -x DEBEMAIL "lorenzo@villani.me"
 set -x DEBFULLNAME "Lorenzo Villani"
 set -x EDITOR subl
