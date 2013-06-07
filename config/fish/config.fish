@@ -30,6 +30,18 @@ alias x-ext "xrandr --output HDMI1 --auto --output LVDS1 --off"
 alias x-int "xrandr --output LVDS1 --auto --output HDMI1 --off"
 alias x-span "xrandr --output HDMI1 --auto --primary --output LVDS1 --auto --right-of HDMI1"
 
+#
+# Functions
+#
+
+function detach
+    nohup $argv 2>&1 1>/dev/null &
+end
+
+#
+# UI
+#
+
 function fish_right_prompt
     echo (basename $VIRTUAL_ENV "") (__fish_git_prompt)
 end
