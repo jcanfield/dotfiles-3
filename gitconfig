@@ -4,7 +4,7 @@
 	cl = clean -ndxff
 	clr = clean -dxff
 	co = checkout
-	log = log --decorate --graph --oneline
+	lg = log --decorate --graph --oneline
 	purr = pull --rebase
 	ready = rebase -i @{u}
 	st = status -sb
