@@ -5,6 +5,8 @@
 bind generic Up move-up
 bind generic Down move-down
 
+bind main R !git rebase -i %(commit)
+
 bind status c !git commit
 bind status C !git commit --amend
 bind status p !git push
