@@ -1,8 +1,8 @@
 [alias]
 	br = branch
 	bra = branch -a
-	cl = clean -ndxff
-	clr = clean -dxff
+	cl = clean -dxf
+	ccl = clean -dxff
 	co = checkout
 	lg = log --decorate --graph --oneline
 	purr = pull --rebase
