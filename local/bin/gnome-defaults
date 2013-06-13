@@ -31,6 +31,7 @@ set -eux
 gconftool-2 -t int -s /apps/compiz-1/general/screen0/options/hsize 3 || true
 gconftool-2 -t int -s /apps/compiz-1/general/screen0/options/vsize 3 || true
 gconftool-2 -t int -s /apps/compiz-1/plugins/unityshell/screen0/options/icon_size 32 || true
+gconftool-2 -t string -s /apps/compiz-1/plugins/unityshell/screen0/options/show_hud "<Shift><Alt>" || true
 
 gsettings set org.gnome.desktop.media-handling autorun-never true
 gsettings set org.gnome.desktop.sound event-sounds false
