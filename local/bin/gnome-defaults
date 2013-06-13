@@ -38,7 +38,7 @@ gsettings set org.gnome.desktop.sound event-sounds false
 
 # Keyboard
 gsettings set org.gnome.libgnomekbd.keyboard layouts "['us\tcolemak', 'us', 'it']"
-gsettings set org.gnome.libgnomekbd.keyboard options "['ctrl\tctrl:nocaps', 'grp\tgrp:rctrl_switch']"
+gsettings set org.gnome.libgnomekbd.keyboard options "['ctrl\tctrl:nocaps']"
 
 # Touchpad
 gsettings set org.gnome.settings-daemon.peripherals.touchpad disable-while-typing true
