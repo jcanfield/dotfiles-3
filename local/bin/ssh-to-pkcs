@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -eux
+
+SSH_KEY="id_rsa"
+CIPHER_ALGO="aes-256-cbc"
+
+openssl pkcs8 -topk8 -v2 "${CIPHER_ALGO}" -in "${HOME}/.ssh/id_rsa" -out "${HOME}/id_rsa.pkcs8"
